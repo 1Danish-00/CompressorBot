@@ -13,28 +13,28 @@
 #    License can be found in < https://github.com/1Danish-00/CompressorBot/blob/main/License> .
 
 
+import asyncio
+import glob
+import inspect
+import io
+import json
+import math
 import os
 import re
-import io
-import sys
-import math
-import glob
-import time
-import json
 import shutil
-import asyncio
-import inspect
-import requests
-import traceback
 import subprocess
-import telethon.utils
-from pathlib import Path
-from decouple import config
+import sys
+import time
+import traceback
 from datetime import datetime as dt
+from logging import DEBUG, INFO, basicConfig, getLogger, warning
+from pathlib import Path
 
+import requests
+import telethon.utils
+from decouple import config
+from telethon import Button, TelegramClient, errors, events, functions, types
 from telethon.sessions import StringSession
-from telethon.utils import get_display_name
-from telethon.tl.functions.users import GetFullUserRequest
-from logging import basicConfig, getLogger, INFO, DEBUG, warning
 from telethon.tl.functions.messages import ExportChatInviteRequest as cl
-from telethon import TelegramClient, events, Button, errors, functions, types
+from telethon.tl.functions.users import GetFullUserRequest
+from telethon.utils import get_display_name

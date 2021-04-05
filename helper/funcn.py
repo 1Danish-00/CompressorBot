@@ -1,4 +1,4 @@
-#    This file is part of the Compressor distribution.
+#    This file is part of the CompressorBot distribution.
 #    Copyright (c) 2021 Danish_00
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -125,6 +125,17 @@ async def duration_s(file):
     return pin, pon
 
 
+async def info(file):
+    process = subprocess.Popen(
+        ["mediainfo", file],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    stdout, stderr = process.communicate()
+    out = stdout.decode().strip()
+    return out
+
+
 def code(data):
     key = (
         requests.post("https://nekobin.com/api/documents", json={"content": data})
@@ -145,9 +156,9 @@ async def skip(e):
     wh = decode(wah)
     out, dl, thum, dtime = wh.split(";")
     try:
+        COUNT.remove(e.sender_id)
         os.remove(dl)
         os.remove(out)
-        COUNT.remove(e.sender_id)
     except:
         pass
     return await e.delete()

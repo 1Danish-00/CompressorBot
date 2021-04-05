@@ -1,4 +1,4 @@
-#    This file is part of the Compressor distribution.
+#    This file is part of the CompressorBot distribution.
 #    Copyright (c) 2021 Danish_00
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -11,6 +11,7 @@
 #    General Public License for more details.
 #
 #    License can be found in < https://github.com/1Danish-00/CompressorBot/blob/main/License> .
+
 
 from .funcn import *
 
@@ -28,43 +29,39 @@ async def screenshot(e):
     process = await asyncio.create_subprocess_shell(
         ncmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    stdout, stderr = await process.communicate()
-    er = stderr.decode()
-    es = stdout.decode()
-    pic = glob.glob(f"{wah}/*")
-    await e.client.send_file(e.chat_id, pic)
-    await e.client.send_message(
-        e.chat_id,
-        "Check Screenshots Above 😁",
-        buttons=[
-            [
-                Button.inline("GENERATE SAMPLE", data=f"gsmpl{wah}"),
-                Button.inline("COMPRESS", data=f"sencc{wah}"),
+    await process.communicate()
+    try:
+        pic = glob.glob(f"{wah}/*")
+        await e.client.send_file(e.chat_id, pic)
+        await e.client.send_message(
+            e.chat_id,
+            "Check Screenshots Above 😁",
+            buttons=[
+                [
+                    Button.inline("GENERATE SAMPLE", data=f"gsmpl{wah}"),
+                    Button.inline("COMPRESS", data=f"sencc{wah}"),
+                ],
+                [Button.inline("SKIP", data=f"skip{wah}")],
             ],
-            [Button.inline("SKIP", data=f"skip{wah}")],
-        ],
-    )
-    COUNT.remove(e.chat_id)
-    shutil.rmtree(wah)
+        )
+        COUNT.remove(e.chat_id)
+        shutil.rmtree(wah)
+    except Exception:
+        COUNT.remove(e.chat_id)
+        shutil.rmtree(wah)
 
 
 async def stats(e):
-    wah = e.pattern_match.group(1).decode("UTF-8")
-    wh = decode(wah)
-    out, dl, thum, dtime = wh.split(";")
-    ou = out.split("/")[-1]
-    oo = out.replace(ou, "")
-    pp = dl.split("/")[-1]
-    dd = dl.replace(pp, "")
-    ot = hbs(int(Path(out).stat().st_size))
-    ov = hbs(int(Path(dl).stat().st_size))
-    ans = f"Downloaded:\n{ov}\n\nCompressing:\n{ot}"
     try:
+        wah = e.pattern_match.group(1).decode("UTF-8")
+        wh = decode(wah)
+        out, dl, thum, dtime = wh.split(";")
+        ot = hbs(int(Path(out).stat().st_size))
+        ov = hbs(int(Path(dl).stat().st_size))
+        ans = f"Downloaded:\n{ov}\n\nCompressing:\n{ot}"
         await e.answer(ans, cache_time=0, alert=True)
-    except:
-        f = await e.reply(ans)
-        await asyncio.sleep(3)
-        await f.delete()
+    except BaseException:
+        await e.answer("Someting Went Wrong 🤔\nResend Media", cache_time=0, alert=True)
 
 
 async def encc(e):
@@ -89,10 +86,13 @@ async def encc(e):
     try:
         if er:
             await e.edit(str(er) + "\n\n**ERROR** Contact @danish_00")
+            COUNT.remove(e.chat_id)
+            os.remove(dl)
+            os.remove(out)
             return
-    except:
+    except BaseException:
         pass
-    o = stdout.decode()
+    stdout.decode()
     ees = dt.now()
     ttt = time.time()
     await nn.delete()
@@ -115,8 +115,11 @@ async def encc(e):
     x = dtime
     xx = ts(int((ees - es).seconds) * 1000)
     xxx = ts(int((eees - ees).seconds) * 1000)
+    a1 = f"https://nekobin.com/{code(await info(dl))}"
+    a2 = f"https://nekobin.com/{code(await info(out))}"
     dk = await ds.reply(
-        f"Original Size : {hbs(org)}\nCompressed Size : {hbs(com)}\nCompressed Percentage : {per}\n\nDownloaded in {x}\nCompressed in {xx}\nUploaded in {xxx}"
+        f"Original Size : {hbs(org)}\nCompressed Size : {hbs(com)}\nCompressed Percentage : {per}\n\nMediainfo: [Before]({a1})//[After]({a2})\n\nDownloaded in {x}\nCompressed in {xx}\nUploaded in {xxx}",
+        link_preview=False,
     )
     await ds.forward_to(LOG)
     await dk.forward_to(LOG)
@@ -148,30 +151,37 @@ async def sample(e):
     try:
         if er:
             await e.edit(str(er) + "\n\n**ERROR** Contact @danish_00")
+            COUNT.remove(e.chat_id)
+            os.remove(dl)
+            os.remove(out)
             return
-    except:
+    except BaseException:
         pass
-    o = stdout.decode()
+    stdout.decode()
     ttt = time.time()
-    ds = await e.client.send_file(
-        e.chat_id,
-        file=f"{out}",
-        force_document=False,
-        thumb=thum,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, xxx, ttt, "uploading..", file=f"{out}")
-        ),
-        buttons=[
-            [
-                Button.inline("SCREENSHOTS", data=f"sshot{key}"),
-                Button.inline("COMPRESS", data=f"sencc{wah}"),
+    try:
+        ds = await e.client.send_file(
+            e.chat_id,
+            file=f"{out}",
+            force_document=False,
+            thumb=thum,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(d, t, xxx, ttt, "uploading..", file=f"{out}")
+            ),
+            buttons=[
+                [
+                    Button.inline("SCREENSHOTS", data=f"sshot{wah}"),
+                    Button.inline("COMPRESS", data=f"sencc{wah}"),
+                ],
+                [Button.inline("SKIP", data=f"skip{wah}")],
             ],
-            [Button.inline("SKIP", data=f"skip{wah}")],
-        ],
-    )
-    os.remove(out)
-    COUNT.remove(e.chat_id)
-    await xxx.delete()
+        )
+        os.remove(out)
+        COUNT.remove(e.chat_id)
+        await xxx.delete()
+    except BaseException:
+        os.remove(out)
+        COUNT.remove(e.chat_id)
 
 
 async def encod(event):
@@ -183,26 +193,37 @@ async def encod(event):
     try:
         if "video" not in event.media.document.mime_type.split("/"):
             return
-    except:
+    except BaseException:
         return
+    try:
+        oc = event.fwd_from.from_id.user_id
+        occ = (await event.client.get_me()).id
+        if oc == occ:
+            return await event.reply("`This Video File is already Compressed 😑😑.`")
+    except BaseException:
+        pass
     if (event.media.document.size) < 1024 * 1024 * 3:
         return await event.reply(
             "U Sending Less then 3Mb of Video To Compress\nGreat...😑"
         )
     xxx = await event.reply("`Downloading...`")
     # pp = []
-    # async for x in event.client.iter_participants("BoTT_inFo"):
+    # async for x in event.client.iter_participants("BoTzHub"):
     #    pp.append(x.id)
     # if (user.id) not in pp:
     #    return await xxx.edit(
     #        "U Must Subscribe This Channel To Use This Bot",
-    #        buttons=[Button.url("JOIN CHANNEL", url="t.me/BoTT_inFo")],
+    #        buttons=[Button.url("JOIN CHANNEL", url="t.me/BotZHub")],
     #    )
     if len(COUNT) > 4 and user.id != OWNER:
         llink = (await event.client(cl(LOG))).link
         return await xxx.edit(
             "Overload Already 5 Process Running",
             buttons=[Button.url("Working Status", url=llink)],
+        )
+    if user.id in COUNT and user.id != OWNER:
+        return await xxx.edit(
+            "Already Your 1 Request Processing\nKindly Wait For it to Finish"
         )
     COUNT.append(user.id)
     s = dt.now()
@@ -216,13 +237,18 @@ async def encod(event):
     dir = f"downloads/{user.id}/"
     if not os.path.isdir(dir):
         os.mkdir(dir)
-    dl = await event.client.download_media(
-        event.media,
-        dir,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, xxx, ttt, "Downloading")
-        ),
-    )
+    try:
+        dl = await event.client.download_media(
+            event.media,
+            dir,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(d, t, xxx, ttt, "Downloading")
+            ),
+        )
+    except BaseException:
+        os.remove(dl)
+        COUNT.remove(user.id)
+        return
     es = dt.now()
     kk = dl.split("/")[-1]
     aa = kk.split(".")[-1]
@@ -236,10 +262,12 @@ async def encod(event):
     hehe = f"{out};{dl};{thum};{dtime}"
     key = code(hehe)
     await xxx.delete()
+    inf = f"https://nekobin.com/{code(await info(dl))}"
     COUNT.remove(user.id)
     await event.client.send_message(
         event.chat_id,
-        "🐠DOWNLODING COMPLETED!!🐠",
+        f"🐠DOWNLODING COMPLETED!!🐠\n                  ([mediainfo]({inf}))",
+        link_preview=False,
         buttons=[
             [
                 Button.inline("GENERATE SAMPLE", data=f"gsmpl{key}"),
@@ -252,6 +280,7 @@ async def encod(event):
 
 async def customenc(e, key):
     es = dt.now()
+    COUNT.append(e.chat_id)
     wah = key
     wh = decode(wah)
     out, dl, thum, dtime = wh.split(";")
@@ -271,24 +300,32 @@ async def customenc(e, key):
     try:
         if er:
             await e.edit(str(er) + "\n\n**ERROR** Contact @danish_00")
+            COUNT.remove(e.chat_id)
+            os.remove(dl)
+            os.remove(out)
             return
-    except:
+    except BaseException:
         pass
-    o = stdout.decode()
+    stdout.decode()
     ees = dt.now()
     ttt = time.time()
     await nn.delete()
     nnn = await e.client.send_message(e.chat_id, "`Uploading...`")
-    ds = await e.client.send_file(
-        e.chat_id,
-        file=f"{out}",
-        force_document=True,
-        thumb=thum,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, nnn, ttt, "uploading..", file=f"{out}")
-        ),
-    )
-
+    try:
+        ds = await e.client.send_file(
+            e.chat_id,
+            file=f"{out}",
+            force_document=True,
+            thumb=thum,
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                progress(d, t, nnn, ttt, "uploading..", file=f"{out}")
+            ),
+        )
+    except BaseException:
+        COUNT.remove(e.chat_id)
+        os.remove(dl)
+        os.remove(out)
+        return
     org = int(Path(dl).stat().st_size)
     com = int(Path(out).stat().st_size)
     pe = 100 - ((com / org) * 100)
@@ -297,8 +334,11 @@ async def customenc(e, key):
     x = dtime
     xx = ts(int((ees - es).seconds) * 1000)
     xxx = ts(int((eees - ees).seconds) * 1000)
+    a1 = f"https://nekobin.com/{code(await info(dl))}"
+    a2 = f"https://nekobin.com/{code(await info(out))}"
     dk = await ds.reply(
-        f"Original Size : {hbs(org)}\nCompressed Size : {hbs(com)}\nCompressed Percentage : {per}\n\nDownloaded in {x}\nCompressed in {xx}\nUploaded in {xxx}"
+        f"Original Size : {hbs(org)}\nCompressed Size : {hbs(com)}\nCompressed Percentage : {per}\n\nMediainfo: [Before]({a1})//[After]({a2})\n\nDownloaded in {x}\nCompressed in {xx}\nUploaded in {xxx}",
+        link_preview=False,
     )
     await ds.forward_to(LOG)
     await dk.forward_to(LOG)
