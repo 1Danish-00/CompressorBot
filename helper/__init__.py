@@ -33,6 +33,7 @@ from pathlib import Path
 import requests
 import telethon.utils
 from decouple import config
+from html_telegraph_poster import TelegraphPoster
 from telethon import Button, TelegramClient, errors, events, functions, types
 from telethon.sessions import StringSession
 from telethon.tl.functions.messages import ExportChatInviteRequest as cl
