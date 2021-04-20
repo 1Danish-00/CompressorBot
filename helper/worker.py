@@ -194,7 +194,7 @@ async def encod(event):
         if not event.media:
             return
         try:
-            if "video" not in event.media.document.mime_type.split("/"):
+            if ("video" or "application/octet-stream") not in event.media.document.mime_type:
                 return
         except BaseException:
             return
