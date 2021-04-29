@@ -14,7 +14,7 @@
 
 
 from .funcn import *
-
+from .FastTelethon import download_file, upload_file
 
 async def screenshot(e):
     await e.edit("`Generating Screenshots...`")
@@ -79,7 +79,7 @@ async def encc(e):
                 [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
             ],
         )
-        cmd = f"ffmpeg -i '{dl}' -preset ultrafast -vcodec libx265 -crf 28 '{out}' -y"
+        cmd = f'ffmpeg -i "{dl}" -preset ultrafast -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y'
         process = await asyncio.create_subprocess_shell(
             cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
@@ -97,15 +97,21 @@ async def encc(e):
         ttt = time.time()
         await nn.delete()
         nnn = await e.client.send_message(e.chat_id, "`Uploading...`")
+        with open(out, "rb") as f:
+            ok = await upload_file(
+                     client=e.client,
+                     file=f,
+                     name=out,
+                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                         progress(d, t, nnn, ttt, "uploading..")
+                         ),
+                     )
         ds = await e.client.send_file(
             e.chat_id,
-            file=f"{out}",
+            file=ok,
             force_document=True,
-            thumb=thum,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, nnn, ttt, "uploading..", file=f"{out}")
-            ),
-        )
+            thumb=thum)
+        await nnn.delete()
         org = int(Path(dl).stat().st_size)
         com = int(Path(out).stat().st_size)
         pe = 100 - ((com / org) * 100)
@@ -122,11 +128,11 @@ async def encc(e):
         )
         await ds.forward_to(LOG)
         await dk.forward_to(LOG)
-        await nnn.delete()
         COUNT.remove(e.chat_id)
         os.remove(dl)
         os.remove(out)
-    except BaseException:
+    except Exception as er:
+        LOGS.info(er)
         return COUNT.remove(e.chat_id)
 
 
@@ -143,7 +149,7 @@ async def sample(e):
             [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
         ],
     )
-    ncmd = f"ffmpeg -i '{dl}' -preset ultrafast -ss {ss} -to {dd} -c:v libx265 -crf 28 '{out}'"
+    ncmd = f'ffmpeg -i "{dl}" -preset ultrafast -ss {ss} -to {dd} -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y'
     process = await asyncio.create_subprocess_shell(
         ncmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -193,10 +199,10 @@ async def encod(event):
         user = await event.get_chat()
         if not event.media:
             return
-        try:
+        if hasattr(event.media, "document"):
             if not event.media.document.mime_type.startswith(("video","application/octet-stream")):
                 return
-        except BaseException:
+        elif hasattr(event.media, "photo"):
             return
         try:
             oc = event.fwd_from.from_id.user_id
@@ -206,13 +212,14 @@ async def encod(event):
         except BaseException:
             pass
         xxx = await event.reply("`Downloading...`")
-        pp = []
-        # async for x in event.client.iter_participants("ensemblygroup"):
+        """ For Force Subscribe Channel"""
+        # pp = []
+        # async for x in event.client.iter_participants("put group username"):
         #    pp.append(x.id)
         # if (user.id) not in pp:
         #    return await xxx.edit(
         #        "U Must Subscribe This Channel To Use This Bot",
-        #       buttons=[Button.url("JOIN CHANNEL", url="t.me/ensemblygroup")],
+        #       buttons=[Button.url("JOIN CHANNEL", url="put group link")],
         #   )
         if len(COUNT) > 4 and user.id != OWNER:
             llink = (await event.client(cl(LOG))).link
@@ -237,14 +244,40 @@ async def encod(event):
         if not os.path.isdir(dir):
             os.mkdir(dir)
         try:
-            dl = await event.client.download_media(
-                event.media,
-                dir,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, xxx, ttt, "Downloading")
-                ),
-            )
-        except BaseException:
+            if hasattr(event.media, "document"):
+                file = event.media.document
+                mime_type = file.mime_type
+                filename = event.file.name
+                if not filename:
+                    filename = (
+                            "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
+                    )
+                dl = dir + filename
+                with open(dl, "wb") as f:
+                     ok = await download_file(
+                        client=event.client,
+                        location=file,
+                        out=f,
+                        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                            progress(
+                                d,
+                                t,
+                                xxx,
+                                ttt,
+                                "Downloading",
+                            )
+                        ),
+                    )
+            else:
+                dl = await event.client.download_media(
+                    event.media,
+                    dir,
+                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                        progress(d, t, xxx, ttt, "Downloading")
+                    ),
+                )
+        except Exception as er:
+            LOGS.info(er)
             COUNT.remove(user.id)
             return os.remove(dl)
         es = dt.now()
@@ -255,7 +288,7 @@ async def encod(event):
             os.mkdir(rr)
         bb = kk.replace(f".{aa}", " compressed.mkv")
         out = f"{rr}/{bb}"
-        thum = "75ee20ec8d8c8bba84f02.jpg"
+        thum = "thumb.jpg"
         dtime = ts(int((es - s).seconds) * 1000)
         hehe = f"{out};{dl};{thum};{dtime}"
         key = code(hehe)
@@ -274,7 +307,8 @@ async def encod(event):
                 [Button.inline("COMPRESS", data=f"sencc{key}")],
             ],
         )
-    except BaseException:
+    except BaseException as er:
+        LOGS.info(er)
         return COUNT.remove(user.id)
 
 
@@ -291,7 +325,7 @@ async def customenc(e, key):
             [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
         ],
     )
-    cmd = f"ffmpeg -i '{dl}' -preset ultrafast -vcodec libx265 -crf 28 '{out}' -y"
+    cmd = f'ffmpeg -i "{dl}" -preset ultrafast -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y'
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -311,16 +345,23 @@ async def customenc(e, key):
     await nn.delete()
     nnn = await e.client.send_message(e.chat_id, "`Uploading...`")
     try:
+        with open(out, "rb") as f:
+            ok = await upload_file(
+                     client=e.client,
+                     file=f,
+                     name=out,
+                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+                         progress(d, t, nnn, ttt, "uploading..")
+                         ),
+                     )
         ds = await e.client.send_file(
             e.chat_id,
-            file=f"{out}",
+            file=ok,
             force_document=True,
-            thumb=thum,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, nnn, ttt, "uploading..", file=f"{out}")
-            ),
-        )
-    except BaseException:
+            thumb=thum)
+        await nnn.delete()
+    except Exception as er:
+        LOGS.info(er)
         COUNT.remove(e.chat_id)
         os.remove(dl)
         return os.remove(out)

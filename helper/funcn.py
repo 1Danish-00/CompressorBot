@@ -17,7 +17,7 @@ from .config import *
 COUNT = []
 
 uptime = dt.now()
-os.system("wget https://telegra.ph/file/75ee20ec8d8c8bba84f02.jpg")
+os.system("wget https://telegra.ph/file/75ee20ec8d8c8bba84f02.jpg -O thumb.jpg")
 
 if not os.path.isdir("downloads/"):
     os.mkdir("downloads/")
@@ -79,8 +79,8 @@ async def progress(current, total, event, start, type_of_ps, file=None):
         speed = current / diff
         time_to_completion = round((total - current) / speed) * 1000
         progress_str = "`[{0}{1}] {2}%`\n\n".format(
-            "".join(["𒊹︎︎︎" for i in range(math.floor(percentage / 5))]),
-            "".join(["●" for i in range(20 - math.floor(percentage / 5))]),
+            "".join(["●" for i in range(math.floor(percentage / 5))]),
+            "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
             round(percentage, 2),
         )
         tmp = (
@@ -116,7 +116,7 @@ async def genss(file):
 async def duration_s(file):
     tsec = await genss(file)
     x = round(tsec / 5)
-    y = round(tsec / 5 + 60)
+    y = round(tsec / 5 + 30)
     pin = stdr(x)
     if y < tsec:
         pon = stdr(y)
