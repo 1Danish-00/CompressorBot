@@ -15,10 +15,6 @@
 
 from helper._get import *
 
-basicConfig(format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=INFO)
-LOGS = getLogger(__name__)
-
-
 LOGS.info("Starting...")
 
 

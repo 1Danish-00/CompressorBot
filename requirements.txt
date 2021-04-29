@@ -1,0 +1,7 @@
+aiohttp
+python-decouple
+cryptg
+TgCrypto
+telethon
+html_telegraph_poster
+requests
