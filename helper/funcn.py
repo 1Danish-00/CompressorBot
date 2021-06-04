@@ -145,17 +145,26 @@ async def info(file, event):
 
 
 def code(data):
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": data})
-        .json()
-        .get("result")
-        .get("key")
-    )
+    try:
+        key = (
+            requests.post("https://nekobin.com/api/documents", json={"content": data})
+            .json()
+            .get("result")
+            .get("key")
+        )
+        key = key + "01"
+    except BaseException:
+        key = requests.post("https://del.dog/documents", data=data.encode("UTF-8")).json().get('key')
+        key = key + "02"
     return key
 
 
 def decode(key):
-    a = requests.get(f"https://nekobin.com/raw/{key}")
+    keyy = key[:-2]
+    if key.endswith("01"):
+        a = requests.get(f"https://nekobin.com/raw/{keyy}")
+    elif key.endswith("02"):
+        a = requests.get(f"https://del.dog/raw/{keyy}")
     return a.text
 
 
