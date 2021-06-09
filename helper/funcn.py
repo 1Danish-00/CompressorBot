@@ -152,6 +152,7 @@ def code(data):
             .get("result")
             .get("key")
         )
+        a, b, c, d = requests.get(f"https://nekobin.com/raw/{key}").text
         key = key + "01"
     except BaseException:
         key = requests.post("https://del.dog/documents", data=data.encode("UTF-8")).json().get('key')
