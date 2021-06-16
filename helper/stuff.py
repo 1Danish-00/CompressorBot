@@ -33,8 +33,9 @@ async def start(event):
         buttons=[
             [Button.inline("HELP", data="ihelp")],
             [
-                Button.url("SOURCE CODE", url="github.com/1Danish-00/CompressorBot"),
-                Button.url("DEVELOPER", url="t.me/danish_00"),
+                Button.url("👨‍🔧UPDATES CHANNEL👨‍🔧", url="t.me/disneygrou"),
+                Button.url("👨‍💻DEVELOPER👨‍💻", url="t.me/doreamonfans1"),
+                Button.url("🤖SUPPORT🤖", url="t.me/disneyteamchat"),
             ],
         ],
     )
@@ -60,8 +61,9 @@ async def beck(event):
         buttons=[
             [Button.inline("HELP", data="ihelp")],
             [
-                Button.url("SOURCE CODE", url="github.com/1Danish-00/"),
-                Button.url("DEVELOPER", url="t.me/danish_00"),
+                Button.url("👨‍🔧UPDATES CHANNEL👨‍🔧", url="t.me/disneygrou"),
+                Button.url("👨‍💻DEVELOPER👨‍💻", url="t.me/doreamonfans1"),
+                Button.url("🤖SUPPORT🤖", url="t.me/disneyteamchat"),
             ],
         ],
     )
@@ -90,7 +92,7 @@ async def back(e):
                 Button.inline("GENERATE SAMPLE", data=f"gsmpl{key}"),
                 Button.inline("SCREENSHOTS", data=f"sshot{key}"),
             ],
-            [Button.inline("COMPRESS", data=f"sencc{key}")],
+            [Button.inline("SUPER_COMPRESS", data=f"sencc{key}")],
         ],
     )
 
