@@ -35,13 +35,13 @@ async def screenshot(e):
         await e.client.send_file(e.chat_id, pic)
         await e.client.send_message(
             e.chat_id,
-            "Check Screenshots Above 😁",
+            "Check Screenshots Above 😉",
             buttons=[
                 [
-                    Button.inline("GENERATE SAMPLE", data=f"gsmpl{wah}"),
-                    Button.inline("COMPRESS", data=f"sencc{wah}"),
+                    Button.inline("GENERATE SAMPLE [Join @anime_low_size]", data=f"gsmpl{wah}"),
+                    Button.inline("ENCODE", data=f"sencc{wah}"),
                 ],
-                [Button.inline("SKIP", data=f"skip{wah}")],
+                [Button.inline("SKIP THIS SHIT", data=f"skip{wah}")],
             ],
         )
         COUNT.remove(e.chat_id)
@@ -62,7 +62,7 @@ async def stats(e):
         ans = f"Downloaded:\n{ov}\n\nCompressing:\n{ot}"
         await e.answer(ans, cache_time=0, alert=True)
     except BaseException:
-        await e.answer("Someting Went Wrong 🤔\nResend Media", cache_time=0, alert=True)
+        await e.answer("Someting Went Wrong [Fuckingly]\nResend Media Or Leave me", cache_time=0, alert=True)
 
 
 async def encc(e):
@@ -73,13 +73,13 @@ async def encc(e):
         wh = decode(wah)
         out, dl, thum, dtime = wh.split(";")
         nn = await e.edit(
-            "`Compressing..`",
+            "`Encoding..`",
             buttons=[
-                [Button.inline("STATS", data=f"stats{wah}")],
-                [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
+                [Button.inline("Encoded Stats", data=f"stats{wah}")],
+                [Button.inline("CANCEL PROCESS Badly", data=f"skip{wah}")],
             ],
         )
-        cmd = f'ffmpeg -i "{dl}" -preset ultrafast -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y'
+        cmd = f'ffmpeg -i "{dl}" -preset veryfast -c:v libx264 -crf 32 -map 0:v -c:a libopus -ab 30k -map 0:a -c:s copy -map 0:s? "{out}" -y'
         process = await asyncio.create_subprocess_shell(
             cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
@@ -96,7 +96,7 @@ async def encc(e):
         ees = dt.now()
         ttt = time.time()
         await nn.delete()
-        nnn = await e.client.send_message(e.chat_id, "`Uploading...`")
+        nnn = await e.client.send_message(e.chat_id, "`Uploading Sir Ji...`")
         with open(out, "rb") as f:
             ok = await upload_file(
                      client=e.client,
@@ -149,7 +149,7 @@ async def sample(e):
             [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
         ],
     )
-    ncmd = f'ffmpeg -i "{dl}" -preset ultrafast -ss {ss} -to {dd} -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y'
+    ncmd = f'ffmpeg -i "{dl}" -preset veryfast -ss {ss} -to {dd} -c:v libx264 -crf 32 -map 0:v -c:a libopus -ab 30k -map 0:a -c:s copy -map 0:s? "{out}" -y'
     process = await asyncio.create_subprocess_shell(
         ncmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -177,8 +177,8 @@ async def sample(e):
             ),
             buttons=[
                 [
-                    Button.inline("SCREENSHOTS", data=f"sshot{wah}"),
-                    Button.inline("COMPRESS", data=f"sencc{wah}"),
+                    Button.inline("SCREENSHOTS Lo Sir", data=f"sshot{wah}"),
+                    Button.inline("Encode", data=f"sencc{wah}"),
                 ],
                 [Button.inline("SKIP", data=f"skip{wah}")],
             ],
@@ -229,7 +229,7 @@ async def encod(event):
             )
         if user.id in COUNT and user.id != OWNER:
             return await xxx.edit(
-                "Already Your 1 Request Processing\nKindly Wait For it to Finish"
+                "Already Your 1 Request Is Processing\nKindly Wait For it to Finish🤪"
             )
         COUNT.append(user.id)
         s = dt.now()
@@ -297,14 +297,14 @@ async def encod(event):
         COUNT.remove(user.id)
         await event.client.send_message(
             event.chat_id,
-            f"🐠DOWNLODING COMPLETED!!🐠",
+            f"😑DOWNLODING COMPLETED!!😌",
             buttons=[
                 [
                     Button.inline("GENERATE SAMPLE", data=f"gsmpl{key}"),
                     Button.inline("SCREENSHOTS", data=f"sshot{key}"),
                 ],
                 [Button.url("MEDIAINFO", url=inf)],
-                [Button.inline("COMPRESS", data=f"sencc{key}")],
+                [Button.inline("Encode", data=f"sencc{key}")],
             ],
         )
     except BaseException as er:
@@ -325,7 +325,7 @@ async def customenc(e, key):
             [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
         ],
     )
-    cmd = f'ffmpeg -i "{dl}" -preset ultrafast -c:v libx265 -crf 27 -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y'
+    cmd = f'ffmpeg -i "{dl}"-preset veryfast -c:v libx264 -crf 32 -map 0:v -c:a libopus -ab 30k -map 0:a -c:s copy -map 0:s? "{out}" -y'
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -376,7 +376,7 @@ async def customenc(e, key):
     a1 = await info(dl, e)
     a2 = await info(out, e)
     dk = await ds.reply(
-        f"Original Size : {hbs(org)}\nCompressed Size : {hbs(com)}\nCompressed Percentage : {per}\n\nMediainfo: [Before]({a1})//[After]({a2})\n\nDownloaded in {x}\nCompressed in {xx}\nUploaded in {xxx}",
+        f"Original Size : {hbs(org)}\nEncoded Size : {hbs(com)}\nEncoded Percentage : {per}\n\nMediainfo: [Before]({a1})//[After]({a2})\n\nDownloaded in {x}\nEncoded in {xx}\nUploaded in {xxx}",
         link_preview=False,
     )
     await ds.forward_to(LOG)
