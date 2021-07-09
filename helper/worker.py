@@ -79,7 +79,7 @@ async def encc(e):
                 [Button.inline("CANCEL PROCESS", data=f"skip{wah}")],
             ],
         )
-        cmd = f'ffmpeg -i "{dl}" -preset fast -c:v libx264 -crf 32 -map 0:v -c:a libopus -ac 2 -ab 40k -vbr 2  -map 0:a -c:s copy -map 0:s? "{out}" -y'
+        cmd = f'ffmpeg -i "{dl}" -preset veryfast -c:v libx264 -s 800x480  -crf 32 -map 0:v -c:a libopus -ac 2 -ab 40k -vbr 2  -map 0:a -c:s copy -map 0:s? "{out}" -y'
         process = await asyncio.create_subprocess_shell(
             cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
