@@ -14,3 +14,6 @@
 - You of its Quality encode It takes little time to Compress.
 - For now i set it for maximum 5 Processes at a time.
 - Its Running Without Database so Block /ban /Broadcast Feature is currently Not available.
+
+### Credits
+* [Lonami](https://github.com/LonamiWebs/) for [Telethon.](https://github.com/LonamiWebs/Telethon)
