@@ -7,10 +7,10 @@
 
 ### A Telegram Video CompressorBot
 
-- it compress videos with negligible Quality change.
-- u can generate sample Compressed videos nd screenshots too.
-- u can set custom video name nd Thumbnail.
-- u can get logs videos to a channel too.
-- Coz of its Quality encode It takes little time to Compress.
+- It compress videos with negligible Quality change.
+- You can generate sample Compressed videos and screenshots too.
+- You can set custom video name and Thumbnail.
+- You can get logs videos to a channel too.
+- You of its Quality encode It takes little time to Compress.
 - For now i set it for maximum 5 Processes at a time.
-- Its Running Without Db so Block /ban /Broadcast Feature is currently Not available.
+- Its Running Without Database so Block /ban /Broadcast Feature is currently Not available.
