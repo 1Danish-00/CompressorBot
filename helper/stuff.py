@@ -18,12 +18,13 @@ from .worker import *
 async def up(event):
     if not event.is_private:
         return
-    stt = dt.now()
-    ed = dt.now()
+    t = time.time()
+    x = await event.reply("`Pong !!`")
+    tt = time.time() - t
+    ms = f"{float(str(tt))*1000}"
     v = ts(int((ed - uptime).seconds) * 1000)
-    ms = (ed - stt).microseconds / 1000
     p = f"🌋Pɪɴɢ = {ms}ms"
-    await event.reply(v + "\n" + p)
+    await x.edit(v + "\n" + p)
 
 
 async def start(event):
