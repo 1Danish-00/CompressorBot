@@ -20,12 +20,14 @@ OK = {}
 uptime = dt.now()
 os.system("wget https://telegra.ph/file/75ee20ec8d8c8bba84f02.jpg -O thumb.jpg")
 
-if not os.path.isdir("downloads/"):
-    os.mkdir("downloads/")
-if not os.path.isdir("encode/"):
-    os.mkdir("encode/")
-if not os.path.isdir("thumb/"):
-    os.mkdir("thumb/")
+if not os.path.isdir("downloads"):
+    os.mkdir("downloads")
+if not os.path.isdir("encode"):
+    os.mkdir("encode")
+if not os.path.isdir("thumb"):
+    os.mkdir("thumb")
+if not os.path.isdir("mediainfo"):
+    os.mkdir("mediainfo")
 
 
 def stdr(seconds: int) -> str:
