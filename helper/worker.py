@@ -14,7 +14,7 @@
 
 
 from .funcn import *
-from .FastTelethon import download_file, upload_file
+from .FastTelethon import fast_download, fast_upload
 
 async def screenshot(e):
     await e.edit("`Generating Screenshots...`")
