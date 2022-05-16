@@ -6,7 +6,7 @@ services:
       API_HASH: $API_HASH  
       BOT_TOKEN: $BOT_TOKEN 
       OWNER-ID: $OWNER-ID
-      FORCESUB: $FORCESUB
+      LOG_CHANNEL: $LOG_CHANNEL
     ports:
       - 8080
     resources:
