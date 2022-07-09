@@ -29,7 +29,7 @@ async def up(event):
 async def start(event):
     ok = await event.client(GetFullUserRequest(event.sender_id))
     await event.reply(
-        f"Hi `{ok.user.first_name}`\nThis is A CompressorBot Which Can Encode Videos.\nReduce Size of Videos With Negligible Quality Change\nU can Generate Samples/screenshots too and this boy buyers by @KingDarkNight to buy bot like this contact @mxnitro .",
+        f"Hi `{ok.user.first_name}`\nThis is A CompressorBot Which Can Encode Videos.Reduce Size of Videos With Negligible Quality ChangeU can Generate Samples/screenshotsOwner :- @KingDarkNight.",
         buttons=[
             [Button.inline("HELP", data="ihelp")],
             [
