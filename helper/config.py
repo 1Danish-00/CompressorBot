@@ -17,9 +17,9 @@ from . import *
 try:
     APP_ID = 7931165
     API_HASH = "5a2e46d1e6deb1456c75aa743bc8e0e6"
-    BOT_TOKEN = "5385292787:AAHXioxYyZ72xSYG_QlzDux74r-x-1AWawc"
-    OWNER = config("OWNER_ID", default=2056092603, cast=int)
-    LOG = -1001492550578
+    BOT_TOKEN = "5573297009:AAGylGH76lrMGW_HXXzejkeFTt4JT9L72NY"
+    OWNER = config("OWNER_ID", default=5392115802, cast=int)
+    LOG = -1001752285203
 except Exception as e:
     LOGS.info("Environment vars Missing")
     LOGS.info("something went wrong")
