@@ -1,5 +1,5 @@
 ## 𝕍𝕚𝕕𝕖𝕠 ℂ𝕆𝕄ℙℝ𝔼𝕊𝕊𝕆ℝ 𝔹𝕆𝕋  
-
+Ok
 ## ᴍᴜʟᴛɪғᴜɴᴄᴛɪᴏɴ ǫᴜᴀʟɪᴛʏ ᴄᴏᴍᴘʀᴇssᴏʀ  
 
 ### A Telegram Video CompressorBot  
