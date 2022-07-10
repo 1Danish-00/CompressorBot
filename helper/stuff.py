@@ -29,12 +29,12 @@ async def up(event):
 async def start(event):
     ok = await event.client(GetFullUserRequest(event.sender_id))
     await event.reply(
-        f"Hi `{ok.user.first_name}`\nThis is A CompressorBot Which Can Encode Videos.Reduce Size of Videos With Negligible Quality ChangeU can Generate Samples/screenshotsOwner :- @bhopaaa.",
+        f"Hi `{ok.user.first_name}`\nThis is A CompressorBot Which Can Encode Videos.Reduce Size of Videos With Negligible Quality ChangeU can Generate Samples/screenshotsOwner :- @MXNITRO.",
         buttons=[
             [Button.inline("HELP", data="ihelp")],
             [
                 Button.url("buy bots", url="t.me/MXNITRO"),
-                Button.url("OWNER", url="t.me/KingDarkNight"),
+                Button.url("OWNER", url="t.me/MXNITRO"),
             ],
         ],
     )
