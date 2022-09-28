@@ -1,16 +1,16 @@
 ## 𝕍𝕚𝕕𝕖𝕠 ℂ𝕆𝕄ℙℝ𝔼𝕊𝕊𝕆ℝ 𝔹𝕆𝕋  
 
-## ᴍᴜʟᴛɪғᴜɴᴄᴛɪᴏɴ ǫᴜᴀʟɪᴛʏ ᴄᴏᴍᴘʀᴇssᴏʀ  
 
-### A Telegram Video CompressorBot  
 
-- it compress videos with negligible Quality change.
-- u can generate sample Compressed videos nd screenshots too.
-- u can set custom video name nd Thumbnail.
+
+
+- A TG Videos Compress Bot
+- At One Time 5 Members Can Compress 
+- You Can Keep A Tumbnail and Name
 - u can get logs videos to a channel too.
-- Coz of its Quality encode It takes little time to Compress.
+- Cozof its Quality encode It takes little time to Compress.
 - For now i set it for maximum 5 Processes at a time.
-- Its Running Without Db so Block /ban /Broadcast Feature is currently Not available.
+- Its Running Without Db so Block /ban /Broadcast is currently Not available.
 
-### Fork Repo Then click on below button of ur fork repo.  
+### Fork Repo Then click on your  Below button of your fork repo.  
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
